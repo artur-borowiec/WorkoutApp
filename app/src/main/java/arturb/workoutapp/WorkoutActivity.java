@@ -25,6 +25,7 @@ public class WorkoutActivity extends AppCompatActivity
     int maxPullUps, maxDips, maxPushUps;
 
     int pullUpCount = 0, dipCount = 0, pushUpCount = 0;
+    int pullUph = 0, diph = 0, pushUph = 0;
 
     Boolean pullUpActive = true;
     Boolean dipActive = true;
@@ -57,15 +58,12 @@ public class WorkoutActivity extends AppCompatActivity
         maxDips = extras.getInt("maxDips");
         maxPushUps = extras.getInt("maxPushUps");
 
-        maxPullUps /= 2;
-        maxDips /= 2;
-        maxPushUps /= 2;
-
         sets = max(maxPullUps, maxDips, maxPushUps) + 4;
 
         //workoutPart
 
-        setsText.setText(curSetNo + "/" + sets);
+        setsText.setText(""+ maxPullUps + maxDips + maxPushUps);
+        //setsText.setText(curSetNo + "/" + sets);
 
 
     }
@@ -92,17 +90,27 @@ public class WorkoutActivity extends AppCompatActivity
         }
         if (curSetNo <= sets)
         {
-            pullUpReps.setText("" + curSetNo);
-            dipReps.setText("" + curSetNo);
-            pushUpReps.setText("" + curSetNo);
-            setsText.setText(curSetNo + "/" + sets);
+            if (pullUph != 4)
+                pullUpReps.setText("" + curSetNo);
+            if (diph != 4)
+                dipReps.setText("" + curSetNo);
+            if (pushUph != 4)
+                pushUpReps.setText("" + curSetNo);
+            //setsText.setText(curSetNo + "/" + sets);
+            setsText.setText("" + pullUph + diph + pushUph);
 
-            if (maxPullUps == curSetNo)
+            if (pullUph == 5)
                 pullUpActive = false;
-            if (maxDips == curSetNo)
+            else if (maxPullUps == curSetNo)
+                pullUph++;
+            if (diph == 5)
                 dipActive = false;
-            if (maxPushUps == curSetNo)
+            else if (maxDips == curSetNo)
+                diph++;
+            if (pushUph == 5)
                 pushUpActive = false;
+            else if (maxPushUps == curSetNo)
+                pushUph++;
 
             if (curEx == 1 && pullUpActive)
             {
